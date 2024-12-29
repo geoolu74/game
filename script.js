@@ -1,3 +1,6 @@
+import { createStar, drawStar, updateStar } from './star.js';
+import { individuals } from './gen.js';
+
 const canvas = document.getElementById('canvas1');
 const ctx = canvas.getContext('2d');
 
@@ -6,11 +9,10 @@ function resizeCanvas() {
     canvas.height = window.innerHeight;
 }
 window.addEventListener('resize', resizeCanvas);
-resizeCanvas();
 
 const keys = [];
 let text = '';
-pressedEnter = false;
+let pressedEnter = false;
 
 function keyDown(e) {
     if(e.key === 'Backspace') {
@@ -23,7 +25,7 @@ function keyDown(e) {
         keys.push(e.key);
     }
     
-    console.log(e.key, e);
+    //console.log(e.key, e);
     text = keys.join('');
 }
 window.addEventListener('keydown', keyDown);
@@ -39,6 +41,8 @@ function mouseMove(e) {
     //console.log(mouse.x, mouse.y);
 }
 window.addEventListener('mousemove', mouseMove);
+
+const stars = [];
 
 let particles = [];
 const gap = 3;
@@ -94,36 +98,6 @@ function checkIfParticleIsStar(particle) {
     return isStar;
 }
 
-const stars = [];
-
-function createStar() {
-    return {
-        x: Math.random() * canvas.width,
-        y: Math.random() * canvas.height,
-        radius: Math.random() * 2,
-        speed: Math.random() * 0.5 + 0.5
-    };
-}
-
-for (let i = 0; i < 500; i++) {
-    stars.push(createStar());
-}
-
-function drawStar(star) {
-    ctx.beginPath();
-    ctx.arc(star.x, star.y, star.radius, 0, Math.PI * 2);
-    ctx.fillStyle = 'white';
-    ctx.fill();
-}
-
-function updateStar(star) {
-    star.y += star.speed;
-    if (star.y > canvas.height) {
-        star.y = 0;
-        star.x = Math.random() * canvas.width;
-    }
-}
-
 function drawText(text) {
     const gradient = ctx.createLinearGradient(0, 0, canvas.width, canvas.height);
     gradient.addColorStop('0', 'magenta');
@@ -144,7 +118,7 @@ function animate() {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
 
     stars.forEach(star => {
-        drawStar(star);
+        drawStar(star, ctx);
        //updateStar(star);
     });
     
@@ -155,6 +129,15 @@ function animate() {
     if(pressedEnter) {
         convertToParticles();
         pressedEnter = false;
+
+        console.log('Text: ', text);
+        const result = [...individuals.values()].find(indi => indi.name.includes(text));
+        
+        if(result) {
+            console.log('Result: ', result);
+            const fams = result.fams
+            console.log('Result fams: ', fams.husband.name, fams.wife.name);
+        }
     }
 
     for(let i = 0; i < particles.length; i++) {
@@ -200,10 +183,24 @@ function animate() {
     }
 
     stars.forEach(star => {
-        updateStar(star);
+        updateStar(star, canvas);
     });
     
     requestAnimationFrame(animate);
 }
 
-animate();
+function main() {
+    console.log('Main function');
+    resizeCanvas();
+    console.log('Canvas width: ', canvas.width);
+
+    for (let i = 0; i < 500; i++) {
+        stars.push(createStar(canvas));
+    }
+
+    animate();
+
+    console.log('Number of individuals', individuals.size)
+}
+
+main();
