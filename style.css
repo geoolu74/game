@@ -14,3 +14,18 @@ input {
     width: 50%;
     left: 25%;
 }
+button {
+    position: absolute;
+    width: 20%;
+    height: auto;
+    /*top: 150px;*/
+    /*left: 40%;*/
+    /*display: block;*/
+}
+div {
+    position: absolute;
+    width: 20%;
+    height: auto;
+    background-color: white;
+    padding: 10px;
+}

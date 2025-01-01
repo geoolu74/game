@@ -3,9 +3,10 @@ const startTime = performance.now()
 let f = ''
 //const f = fs.readFileSync("./george anor 241217 (1).ged", "latin1")
 await fetch("./george anor 241217 (1).ged")
-    .then((res) => res.text())
-    .then((text) => {
-        f = text
+    .then((res) => res.arrayBuffer())
+    .then((buff) => {
+        const decoder = new TextDecoder('iso-8859-1');
+        f = decoder.decode(buff);
     })
     .catch((e) => console.error(e));
 const rows = f.split(/\r?\n/)
@@ -124,6 +125,7 @@ function processIndi(indi) {
 
     const name = fixChars(names)
     birthPlace = fixChars(birthPlace)
+    deathDate = fixChars(deathDate)
     deathPlace = fixChars(deathPlace)
     occupation = fixChars(occupation)
     
@@ -186,6 +188,11 @@ function fixChars(str) {
     str = str.replace('èa', 'ä')
     str = str.replace('ÊA', 'Å') // 232 65
     str = str.replace('êa', 'å')
+
+    str = str.replace('âe','é')
+    str = str.replace('èo','ö')
+
+    // 232 111
 
     return str
 }
