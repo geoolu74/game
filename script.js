@@ -412,7 +412,7 @@ function animate() {
     
     if(particles.length === 0) {
         drawText(text, canvas.width/2, 70, 80, 'center');
-        drawText(`Individuals found: ${searchResult.length}`, 150, 70, 20, 'start', 'lightgreen', 'DarkGreen');
+        drawText(`Search hits: ${searchResult.length}`, 5, 70, 20, 'start', 'lightgreen', 'DarkGreen');
     }
 
     for(let i = 0; i < particles.length; i++) {
