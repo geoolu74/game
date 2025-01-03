@@ -5,7 +5,7 @@ const canvas = document.getElementById('canvas1');
 const ctx = canvas.getContext('2d');
 
 const body = document.getElementsByTagName('body')[0];
-//const inputField = document.getElementById('searchText');
+const inputField = document.getElementById('searchText');
 
 /*const husband = document.getElementById('husband');
 const wife = document.getElementById('wife');
@@ -51,7 +51,7 @@ function keyDown(e) {
     
         if(searchResult) {
             console.log('Result length: ', searchResult.length);
-            let totalHeight = 150;
+            let totalHeight = 100;
 
             for(let i = 0; i < searchResult.length && i < 10; i++) {
                 const indi = searchResult[i];
@@ -64,25 +64,13 @@ function keyDown(e) {
         }
     }
 }
-window.addEventListener('keydown', keyDown);
+inputField.addEventListener('keydown', keyDown);
+inputField.focus();
 
 function clearButtons() {
     //let buttons = document.getElementsByTagName('BUTTON');
     let buttons = document.getElementsByTagName('DIV');
     while(buttons.length) buttons[0].parentNode.removeChild(buttons[0]);
-}
-
-function setHtml(element, text) {
-    if(!text) {
-        element.innerHTML = '';
-        return;
-    }
-    element.innerHTML = text
-    
-}
-
-function setDataId(element, id) {
-    element.setAttribute('data-indi', id)
 }
 
 function addButton(id, text, top, left) {
@@ -187,7 +175,7 @@ function addButton(id, text, top, left) {
     });
     element.appendChild(addChildrenElement);
 
-    
+
 
     body.appendChild(element);
 
@@ -203,7 +191,7 @@ function buttonClick(e) {
     
     clearButtons();
    
-    let totalHeight = 150;
+    let totalHeight = 100;
     let childWidth = 0;
 
     const famc = indi.famc
@@ -423,8 +411,8 @@ function animate() {
     });
     
     if(particles.length === 0) {
-        drawText(text, canvas.width/2, 70, 100, 'center');
-        drawText(`Individuals found: ${searchResult.length}`, 150, 70, 25, 'start', 'lightgreen', 'DarkGreen');
+        drawText(text, canvas.width/2, 70, 80, 'center');
+        drawText(`Individuals found: ${searchResult.length}`, 150, 70, 20, 'start', 'lightgreen', 'DarkGreen');
     }
 
     for(let i = 0; i < particles.length; i++) {
